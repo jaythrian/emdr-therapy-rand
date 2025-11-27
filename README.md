@@ -1,4 +1,4 @@
-# emdr-therapy-webapp
+# emdr-therapy-rand
 
 A fork of the simple web app for self-administered EMDR with random movement.
 
