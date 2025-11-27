@@ -78,6 +78,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const lang = document.getElementById('lang');
     const canvas = document.getElementById('canvas');
     const controls = document.getElementById('controls-container');
+    const arrayOfOnes = [-1, 1]
+    const notArrayOfOnes = [-1, -0.4, 0.4, 1]
+    const arrayOfMilliseconds = [180, 190, 1000]
 
     // Initialize state
     startBtn.classList.remove("hidden");
@@ -141,7 +144,8 @@ document.addEventListener("DOMContentLoaded", () => {
     conf.speed = 20
     conf.time = 0
     conf.timeEnabled = true
-    conf.directionX = 1
+    conf.directionX = arrayOfOnes[Math.floor(Math.random() * arrayOfOnes.length)]
+    conf.directionY = arrayOfOnes[Math.floor(Math.random() * arrayOfOnes.length)]
     conf.lang = 'en'
 
     function setLang() {
@@ -189,12 +193,21 @@ document.addEventListener("DOMContentLoaded", () => {
     redrawBg()
 
     const moveBall = () => {
+        
         if (conf.directionX > 0 && ball.position.x + conf.radius >= paper.view.bounds.width || conf.directionX < 0 && ball.position.x - conf.radius <= 0) {
             conf.directionX *= -1;
             beepSound.play();
         }
+
+        if (conf.directionY > 0 && ball.position.y + conf.radius >= paper.view.bounds.height || conf.directionY < 0 && ball.position.y - conf.radius <= 0) {
+            conf.directionY *= -1;
+            beepSound.play();
+        }
         const deltaX = Math.round(paper.view.bounds.width - 2 * conf.radius)
+        const deltaY = Math.round(paper.view.bounds.height - 2 * conf.radius)
         ball.position.x += conf.directionX * conf.speed * deltaX / 1000;
+        ball.position.y += conf.directionY * conf.speed * deltaY /1000;
+        
     };
 
     const startAnimation = () => {
@@ -299,5 +312,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 stopAnimation()
             }
         }
-    }, 1000)
+
+        conf.directionX = notArrayOfOnes[Math.floor(Math.random() * notArrayOfOnes.length)];
+        conf.directionY = notArrayOfOnes[Math.floor(Math.random() * notArrayOfOnes.length)];
+
+
+    }, arrayOfMilliseconds[Math.floor(Math.random() * arrayOfMilliseconds.length)])
 });
